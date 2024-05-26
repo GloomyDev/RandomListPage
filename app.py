@@ -1,6 +1,7 @@
 from flask import Flask, render_template_string, request, redirect, url_for
 import random
 
+# Initialize Flask app
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -198,5 +199,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-if __name__ == '__main__':
-    app.run(debug=True)

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Randomize Words</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>漢字リストのランダム化</h1>
+    <h2>Kanji List Randomizer</h2>
+    <form method="post">
+      <div class="grid">
+        {% for i in range(num_lists) %}
+          <div>
+            <h3>List {{ i + 1 }}</h3>
+            <textarea name="words{{ i }}" rows="5" placeholder="Enter words, each on a new line"></textarea>
+          </div>
+        {% endfor %}
+      </div>
+      <button type="submit">Randomize</button>
+    </form>
+    <div class="grid">
+      {% for i in range(num_lists) %}
+        {% if shuffled_lists[i] %}
+          <div>
+            <h3>Shuffled Words for List {{ i + 1 }}:</h3>
+            <ul>
+            {% for word in shuffled_lists[i] %}
+              <li>{{ word }}</li>
+            {% endfor %}
+            </ul>
+            <p class="word-count">Word Count: {{ shuffled_lists[i] | length }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="total-words" style="font-weight: bold;" >Total Words: {{ total_words }}</div>
+  </div>
+</body>
+</html>
