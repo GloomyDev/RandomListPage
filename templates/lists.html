@@ -5,6 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Randomize Words</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <style>
+    .form-buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+    .form-buttons button {
+      flex-grow: 1;
+    }
+    .shuffle-button {
+      background-color: #4CAF50; /* Green */
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 10px; /* Add some space between buttons */
+    }
+    .shuffle-button:hover {
+      background-color: #45a049; /* Darker green on hover */
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -19,10 +40,10 @@
           </div>
         {% endfor %}
       </div>
-      <button type="submit">Randomize</button>
-    </form>
-    <form action="{{ url_for('lists', num_lists=num_lists) }}" method="post">
-      <button type="submit">Shuffle Again</button>
+      <div class="form-buttons">
+        <button type="submit">Randomize</button>
+        <button type="button" class="shuffle-button" onclick="shuffleAgain()">Shuffle Again</button>
+      </div>
     </form>
     <div class="grid">
       {% for i in range(num_lists) %}
@@ -41,5 +62,10 @@
     </div>
     <div class="total-words" style="font-weight: bold;">Total Words: {{ total_words }}</div>
   </div>
+  <script>
+    function shuffleAgain() {
+      document.querySelector('form').submit();
+    }
+  </script>
 </body>
 </html>
