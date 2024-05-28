@@ -21,6 +21,9 @@
       </div>
       <button type="submit">Randomize</button>
     </form>
+    <form action="{{ url_for('lists', num_lists=num_lists) }}" method="post">
+      <button type="submit">Shuffle Again</button>
+    </form>
     <div class="grid">
       {% for i in range(num_lists) %}
         {% if shuffled_lists[i] %}
