@@ -7,40 +7,36 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="container">
-      <h1>漢字リストのランダム化</h1>
-      <h2>Kanji List Randomizer</h2>
-      <form method="post">
-        <div class="grid">
-          <div>
-            <h3>Input Combined List (separate groups by double newlines)</h3>
-            <textarea name="combined_words" rows="15" placeholder="Enter words, separated by double newlines for different lists"></textarea>
-          </div>
-          {% for i in range(num_lists) %}
-            <div>
-              <h3>Input List {{ i + 1 }}</h3>
-              <textarea name="words{{ i }}" rows="15" placeholder="Enter words, one per line"></textarea>
-            </div>
-          {% endfor %}
-        </div>
-        <button type="submit">Randomize</button>
-      </form>
+  <div class="container">
+    <h1>漢字リストのランダム化</h1>
+    <h2>Kanji List Randomizer</h2>
+    <form method="post">
       <div class="grid">
         {% for i in range(num_lists) %}
-          {% if shuffled_lists[i] %}
-            <div>
-              <h3>Shuffled Words for List {{ i + 1 }}:</h3>
-              <ul>
-              {% for word in shuffled_lists[i] %}
-                <li>{{ word }}</li>
-              {% endfor %}
-              </ul>
-              <p class="word-count">Word Count: {{ shuffled_lists[i] | length }}</p>
-            </div>
-          {% endif %}
+          <div>
+            <h3>List {{ i + 1 }}</h3>
+            <textarea name="words{{ i }}" rows="5" placeholder="Enter words, each on a new line"></textarea>
+          </div>
         {% endfor %}
       </div>
-      <div class="total-words" style="font-weight: bold;">Total Words: {{ total_words }}</div>
+      <button type="submit">Randomize</button>
+    </form>
+    <div class="grid">
+      {% for i in range(num_lists) %}
+        {% if shuffled_lists[i] %}
+          <div>
+            <h3>Shuffled Words for List {{ i + 1 }}:</h3>
+            <ul>
+            {% for word in shuffled_lists[i] %}
+              <li>{{ word }}</li>
+            {% endfor %}
+            </ul>
+            <p class="word-count">Word Count: {{ shuffled_lists[i] | length }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
     </div>
-  </body>
+    <div class="total-words" style="font-weight: bold;">Total Words: {{ total_words }}</div>
+  </div>
+</body>
 </html>
