@@ -18,18 +18,28 @@ def create_app():
         total_words = 0
 
         if request.method == 'POST':
+            # Procesar palabras ingresadas en una sola entrada
+            combined_words = request.form.get('combined_words', '').strip()
+            if combined_words:
+                words_groups = combined_words.split('\n\n')  # Split the input into groups based on double newlines
+                for i, group in enumerate(words_groups):
+                    words_list = group.split('\n')
+                    words_list = [word.strip() for word in words_list if word.strip()]
+                    total_words += len(words_list)
+                    if i < num_lists:
+                        lists[i] = words_list
+                        shuffled_lists[i] = random.sample(words_list, len(words_list))
+
+            # Procesar palabras ingresadas individualmente para cada lista
             for i in range(num_lists):
-                words = request.form.get(f'words{i}', '')
-                words_list = words.split('\n')
-                words_list = [word.strip() for word in words_list if word.strip()]
-                total_words += len(words_list)
-                lists[i] = words_list
-                shuffled_lists[i] = random.sample(words_list, len(words_list))
+                words = request.form.get(f'words{i}', '').strip()
+                if words:
+                    words_list = words.split('\n')
+                    words_list = [word.strip() for word in words_list if word.strip()]
+                    total_words += len(words_list)
+                    lists[i] += words_list
+                    shuffled_lists[i] = random.sample(lists[i], len(lists[i]))
 
         return render_template('lists.html', num_lists=num_lists, shuffled_lists=shuffled_lists, total_words=total_words)
 
     return app
-
-if __name__ == '__main__':
-    app = create_app()
-    app.run(debug=True)
