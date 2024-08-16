@@ -64,14 +64,24 @@
     </div>
     <script>
       function shuffleAgain() {
-        {% for i in range(num_lists) %}
-          var list{{ i }} = document.getElementById('list{{ i }}');
-          var items{{ i }} = Array.from(list{{ i }}.children);
-          items{{ i }}.forEach(function(item) {
-            list{{ i }}.appendChild(item);
-          });
-        {% endfor %}
+        // Get the total number of lists from server-side
+        const numLists = {{ num_lists }};
+
+        // Loop through each list and shuffle its items
+        for (let i = 0; i < numLists; i++) {
+          var list = document.getElementById('list' + i);
+          var items = Array.from(list.children);
+
+          // Fisher-Yates shuffle algorithm
+          for (let j = items.length - 1; j > 0; j--) {
+            const k = Math.floor(Math.random() * (j + 1));
+            [items[j].innerHTML, items[k].innerHTML] = [items[k].innerHTML, items[j].innerHTML];
+          }
+
+          // Re-append shuffled items
+          items.forEach(item => list.appendChild(item));
+        }
       }
     </script>
   </body>
-  </html>
+</html>
